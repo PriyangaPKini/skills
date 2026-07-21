@@ -15,17 +15,25 @@ The goal is to provide a maintainable skill system, not just a folder of prompts
 
 This repository is being built from [`plan.md`](./plan.md) and [`features.md`](./features.md).
 
-## Promoted skill buckets
+## Skill buckets
+
+Skills are organized by lifecycle and audience.
+
+### Promoted skill buckets
+
+These buckets are the public catalog. Skills here are expected to be stable, documented, and installable.
 
 - [`skills/engineering`](./skills/engineering/README.md) — daily software engineering skills
 - [`skills/productivity`](./skills/productivity/README.md) — general workflow and productivity skills
 
-## Non-promoted buckets
+### Non-promoted buckets
 
-- `skills/misc` — useful but not core or not actively promoted
-- `skills/personal` — private/local workflow skills
-- `skills/in-progress` — drafts and experiments
-- `skills/deprecated` — retired or replaced skills kept for reference
+These buckets are intentionally excluded from the public catalog and future plugin manifests.
+
+- [`skills/misc`](./skills/misc/README.md) — useful but not core or not actively promoted
+- [`skills/personal`](./skills/personal/README.md) — private/local workflow skills
+- [`skills/in-progress`](./skills/in-progress/README.md) — drafts and experiments
+- [`skills/deprecated`](./skills/deprecated/README.md) — retired or replaced skills kept for reference
 
 ## Installation
 
