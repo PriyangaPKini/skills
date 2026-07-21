@@ -1,0 +1,15 @@
+{
+  "name": "skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable agent skills for engineering and productivity workflows.",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/PriyangaPKini/skills.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "list-skills": "bash scripts/list-skills.sh",
+    "validate": "bash scripts/validate-skills.sh"
+  }
+}
