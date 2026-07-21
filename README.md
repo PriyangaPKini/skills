@@ -89,6 +89,10 @@ npm run validate
 
 Pull requests run the same validation in GitHub Actions via [`.github/workflows/validate.yml`](./.github/workflows/validate.yml).
 
+## Releases
+
+See [`CHANGELOG.md`](./CHANGELOG.md) for release notes and the lightweight release process.
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md).

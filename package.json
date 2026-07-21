@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "list-skills": "bash scripts/list-skills.sh",
-    "validate": "bash scripts/validate-skills.sh"
+    "validate": "bash scripts/validate-skills.sh",
+    "release:check": "npm run validate"
   }
 }
