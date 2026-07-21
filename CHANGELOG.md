@@ -6,6 +6,8 @@ This project uses a lightweight manual changelog. Add entries under `Unreleased`
 
 ## Unreleased
 
+- Added `incremental-delivery-workflow` for delivering finalized plans through small reviewable Git/GitHub PR slices.
+
 ## 0.1.0 - 2026-07-21
 
 - Initial promoted engineering and productivity skill catalog.

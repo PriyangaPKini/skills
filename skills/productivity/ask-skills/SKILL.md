@@ -23,6 +23,7 @@ Use this skill when the user explicitly asks which skill to use, how to approach
 - `tdd` — use for test-first feature work, bug fixes with regression tests, red-green-refactor, or integration-test-driven implementation.
 - `diagnosing-bugs` — use for broken, failing, flaky, throwing, or slow behavior where the cause is not yet clear.
 - `code-review` — use for reviewing a PR, branch, diff, or work-in-progress changes against standards and spec.
+- `incremental-delivery-workflow` — use for implementing or resuming a finalized plan as small reviewable Git/GitHub PR slices, preserving linear Git history, coordinating serial phases, or parallelizing independent task branches when requested.
 
 ### Productivity
 
