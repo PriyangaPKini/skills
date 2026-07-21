@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Name"
+  short_description: "Short picker description"
+# Add this only for user-invoked skills:
+# policy:
+#   allow_implicit_invocation: false
