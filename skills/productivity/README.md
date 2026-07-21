@@ -6,7 +6,7 @@ Skills in this bucket are public, stable, and documented. They are not necessari
 
 ## User-invoked
 
-Initial productivity skills will be added in a later feature slice.
+- [`ask-skills`](./ask-skills/SKILL.md) — Ask which skill or workflow fits the current situation.
 
 ## Model-invoked
 
