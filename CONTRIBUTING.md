@@ -41,3 +41,16 @@ GitHub Actions runs the same validation command on pull requests.
 ## Deprecated skills
 
 Do not delete useful retired skills immediately. Move them to `skills/deprecated` and document the replacement when possible.
+
+## Releases
+
+This repository uses a lightweight manual release process.
+
+Before cutting a release:
+
+1. Update `CHANGELOG.md`.
+2. Keep the version in `package.json` synchronized with `.claude-plugin/plugin.json`.
+3. Run `npm run validate`.
+4. Tag the release as `v<version>` after the release commit lands on `main`.
+
+Release tags run validation in GitHub Actions before GitHub release notes are created.

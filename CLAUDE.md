@@ -46,6 +46,10 @@ When promoted user-facing skills are added, renamed, removed, or meaningfully ch
 
 `.claude-plugin/plugin.json` must list only promoted skill directories. Keep its `version` synchronized with `package.json`, and update `docs/installing-in-claude-code.md` when plugin installation instructions change.
 
+## Releases
+
+Keep `CHANGELOG.md` up to date for user-visible changes. Release commits must synchronize the version in `package.json` and `.claude-plugin/plugin.json`; release tags use `v<version>` and run `.github/workflows/release.yml`.
+
 ## Validation
 
 Use the repository scripts to catch catalog and metadata drift:
