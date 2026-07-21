@@ -6,6 +6,8 @@ This project uses a lightweight manual changelog. Add entries under `Unreleased`
 
 ## Unreleased
 
+## 0.1.0 - 2026-07-21
+
 - Initial promoted engineering and productivity skill catalog.
 - Skill authoring templates and promotion documentation.
 - Installation docs for Pi, Claude Code, and Codex.
