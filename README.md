@@ -39,6 +39,12 @@ These buckets are intentionally excluded from the public catalog and future plug
 
 Installation documentation will be added during the installation docs feature.
 
+## Creating skills
+
+- Read [`docs/writing-a-skill.md`](./docs/writing-a-skill.md) before adding a skill.
+- Use [`templates/skill`](./templates/skill) as the starting point.
+- Use [`docs/promotion-checklist.md`](./docs/promotion-checklist.md) before promoting a skill.
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
