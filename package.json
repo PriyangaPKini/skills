@@ -8,6 +8,11 @@
     "url": "https://github.com/PriyangaPKini/skills.git"
   },
   "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "claude-code-plugin",
+    "skills"
+  ],
   "scripts": {
     "list-skills": "bash scripts/list-skills.sh",
     "validate": "bash scripts/validate-skills.sh"
