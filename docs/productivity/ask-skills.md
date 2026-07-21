@@ -8,6 +8,12 @@ npx skills add PriyangaPKini/skills --skill=ask-skills
 
 Source: [`skills/productivity/ask-skills`](https://github.com/PriyangaPKini/skills/tree/main/skills/productivity/ask-skills)
 
+## Inspiration
+
+This skill is inspired by Matt Pocock's `ask-matt` router skill and his skills repository:
+
+https://github.com/mattpocock/skills
+
 ## What it does
 
 The ask-skills skill is a router over the promoted skills in this repository. It helps the user decide which skill best fits their current task.
