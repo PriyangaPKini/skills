@@ -26,6 +26,14 @@ These buckets are the public catalog. Skills here are expected to be stable, doc
 - [`skills/engineering`](./skills/engineering/README.md) — daily software engineering skills
 - [`skills/productivity`](./skills/productivity/README.md) — general workflow and productivity skills
 
+#### Engineering skills
+
+Model-invoked:
+
+- [`tdd`](./skills/engineering/tdd/SKILL.md) — Test-driven development with red-green implementation.
+- [`diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md) — Reproduce, isolate, fix, and regression-test bugs.
+- [`code-review`](./skills/engineering/code-review/SKILL.md) — Review changes against standards and spec.
+
 ### Non-promoted buckets
 
 These buckets are intentionally excluded from the public catalog and future plugin manifests.
