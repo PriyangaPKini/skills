@@ -12,6 +12,10 @@ Thanks for helping improve this skills repository.
 6. Update the root README and bucket README.
 7. Run validation before opening a PR.
 
+```bash
+npm run validate
+```
+
 ## Promoting a skill
 
 A promoted skill must be stable enough for other people to install and use.
@@ -23,6 +27,16 @@ Before promoting a skill, make sure it has:
 - a docs page
 - README entries
 - validation passing
+
+## Pull requests
+
+Before opening a pull request:
+
+- run `npm run validate` locally
+- make sure README and docs changes are included for promoted skills
+- keep non-promoted skills out of the public catalog
+
+GitHub Actions runs the same validation command on pull requests.
 
 ## Deprecated skills
 
