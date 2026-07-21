@@ -51,7 +51,25 @@ These buckets are intentionally excluded from the public catalog and future plug
 
 ## Installation
 
-Installation documentation will be added during the installation docs feature.
+Preferred generic install:
+
+```bash
+npx skills add PriyangaPKini/skills
+```
+
+Install one skill:
+
+```bash
+npx skills add PriyangaPKini/skills --skill=tdd
+```
+
+Agent-specific docs:
+
+- [Installing in Pi](./docs/installing-in-pi.md)
+- [Installing in Claude Code](./docs/installing-in-claude-code.md)
+- [Installing in Codex](./docs/installing-in-codex.md)
+
+Native plugin packaging is planned for a later phase. Until then, use the generic installer or manual copy instructions.
 
 ## Creating skills
 
