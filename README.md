@@ -11,10 +11,6 @@ The goal is to provide a maintainable skill system, not just a folder of prompts
 - each skill has agent-facing instructions plus human-facing usage docs
 - validation scripts catch drift between docs, manifests, and skill metadata
 
-## Status
-
-This repository is being built from [`plan.md`](./plan.md) and [`features.md`](./features.md).
-
 ## Skill buckets
 
 Skills are organized by lifecycle and audience.
