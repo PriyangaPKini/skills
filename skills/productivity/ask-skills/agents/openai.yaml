@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ask Skills"
+  short_description: "Choose the right skill for a task"
+policy:
+  allow_implicit_invocation: false
