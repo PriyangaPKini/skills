@@ -1,0 +1,11 @@
+{
+  "name": "PriyangaPKini skills",
+  "description": "A marketplace entry for reusable engineering and productivity agent skills.",
+  "plugins": [
+    {
+      "name": "skills",
+      "path": ".",
+      "description": "Reusable agent skills for engineering and productivity workflows."
+    }
+  ]
+}

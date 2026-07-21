@@ -69,7 +69,7 @@ Agent-specific docs:
 - [Installing in Claude Code](./docs/installing-in-claude-code.md)
 - [Installing in Codex](./docs/installing-in-codex.md)
 
-Native plugin packaging is planned for a later phase. Until then, use the generic installer or manual copy instructions.
+Claude Code plugin metadata is available in [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json). Use the generic installer for editable installs, or the Claude plugin path when you want the promoted catalog as a native Claude Code plugin.
 
 ## Creating skills
 
@@ -85,7 +85,7 @@ List all skill instruction files:
 npm run list-skills
 ```
 
-Check promoted skill structure, docs coverage, README coverage, and invocation metadata:
+Check promoted skill structure, docs coverage, README coverage, invocation metadata, and Claude plugin manifest sync:
 
 ```bash
 npm run validate
