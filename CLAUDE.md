@@ -27,6 +27,7 @@ Every promoted skill must have:
 - an entry in the root `README.md`
 - an entry in its bucket `README.md`
 - a human-facing docs page at `docs/<bucket>/<skill>.md`
+- an entry in `.claude-plugin/plugin.json` when plugin distribution is enabled
 
 ## Invocation rules
 
@@ -41,6 +42,10 @@ Model-invoked skills should omit those settings and use rich trigger phrasing in
 
 When promoted user-facing skills are added, renamed, removed, or meaningfully changed, update the router/discovery skill.
 
+## Claude plugin
+
+`.claude-plugin/plugin.json` must list only promoted skill directories. Keep its `version` synchronized with `package.json`, and update `docs/installing-in-claude-code.md` when plugin installation instructions change.
+
 ## Validation
 
 Use the repository scripts to catch catalog and metadata drift:
@@ -50,6 +55,6 @@ npm run list-skills
 npm run validate
 ```
 
-`validate` checks promoted skill structure, docs coverage, README coverage, user-invoked metadata consistency, and that non-promoted skills are not exposed as public docs/catalog entries.
+`validate` checks promoted skill structure, docs coverage, README coverage, user-invoked metadata consistency, Claude plugin manifest sync, and that non-promoted skills are not exposed as public docs/catalog entries.
 
 Run validation before opening or updating PRs.

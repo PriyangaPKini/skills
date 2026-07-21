@@ -137,6 +137,60 @@ require_file "scripts/validate-skills.sh" "validate-skills script"
 require_fixed_string "package.json" '"list-skills": "bash scripts/list-skills.sh"' "package.json exposes list-skills script"
 require_fixed_string "package.json" '"validate": "bash scripts/validate-skills.sh"' "package.json exposes validate script"
 
+printf '\nValidating Claude plugin manifest...\n'
+require_file ".claude-plugin/plugin.json" "Claude plugin manifest"
+require_file ".claude-plugin/marketplace.json" "Claude plugin marketplace metadata"
+
+if node <<'NODE'
+const fs = require('fs');
+const promotedBuckets = ['engineering', 'productivity'];
+const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const plugin = JSON.parse(fs.readFileSync('.claude-plugin/plugin.json', 'utf8'));
+const marketplace = JSON.parse(fs.readFileSync('.claude-plugin/marketplace.json', 'utf8'));
+
+const expectedSkills = promotedBuckets.flatMap((bucket) => {
+  const bucketDir = `skills/${bucket}`;
+  if (!fs.existsSync(bucketDir)) return [];
+  return fs.readdirSync(bucketDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => `./${bucketDir}/${entry.name}`)
+    .filter((skillPath) => fs.existsSync(`${skillPath.slice(2)}/SKILL.md`));
+}).sort();
+
+const actualSkills = Array.isArray(plugin.skills) ? [...plugin.skills].sort() : null;
+const errors = [];
+
+if (plugin.version !== packageJson.version) {
+  errors.push(`plugin.json version ${plugin.version || '(missing)'} does not match package.json version ${packageJson.version}`);
+}
+
+if (!actualSkills) {
+  errors.push('plugin.json skills must be an array');
+} else if (JSON.stringify(actualSkills) !== JSON.stringify(expectedSkills)) {
+  errors.push(`plugin.json skills must exactly match promoted skills. expected ${JSON.stringify(expectedSkills)}, got ${JSON.stringify(actualSkills)}`);
+}
+
+for (const skillPath of actualSkills || []) {
+  if (!skillPath.startsWith('./skills/engineering/') && !skillPath.startsWith('./skills/productivity/')) {
+    errors.push(`plugin.json exposes non-promoted skill path ${skillPath}`);
+  }
+}
+
+if (!marketplace.plugins || !Array.isArray(marketplace.plugins) || !marketplace.plugins.some((entry) => entry.name === plugin.name && entry.path === '.')) {
+  errors.push('marketplace.json must include this plugin with path "."');
+}
+
+if (errors.length > 0) {
+  for (const error of errors) console.error(error);
+  process.exit(1);
+}
+NODE
+then
+  pass "Claude plugin manifest is synchronized with promoted skills and package version"
+else
+  fail "Claude plugin manifest validation failed"
+fi
+
 if [[ "$failures" -gt 0 ]]; then
   printf '\nValidation failed with %s issue(s).\n' "$failures" >&2
   exit 1
