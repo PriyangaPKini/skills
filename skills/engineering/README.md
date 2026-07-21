@@ -10,7 +10,9 @@ None yet.
 
 ## Model-invoked
 
-Initial engineering skills will be added in a later feature slice.
+- [`tdd`](./tdd/SKILL.md) — Test-driven development with red-green implementation.
+- [`diagnosing-bugs`](./diagnosing-bugs/SKILL.md) — Reproduce, isolate, fix, and regression-test bugs.
+- [`code-review`](./code-review/SKILL.md) — Review changes against standards and spec.
 
 ## Promotion requirements
 
