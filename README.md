@@ -4,6 +4,8 @@ Reusable agent skills for engineering and productivity workflows.
 
 This repository stores portable `SKILL.md` files that can be installed into Pi, Claude Code, Codex, and other Agent-Skills-compatible coding agents.
 
+This repo is inspired by [Matt Pocock's skills repository](https://github.com/mattpocock/skills).
+
 The goal is to provide a maintainable skill system, not just a folder of prompts:
 
 - stable skills are documented and promoted intentionally
