@@ -34,6 +34,12 @@ Model-invoked:
 - [`diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md) — Reproduce, isolate, fix, and regression-test bugs.
 - [`code-review`](./skills/engineering/code-review/SKILL.md) — Review changes against standards and spec.
 
+#### Productivity skills
+
+User-invoked:
+
+- [`ask-skills`](./skills/productivity/ask-skills/SKILL.md) — Ask which skill or workflow fits the current situation.
+
 ### Non-promoted buckets
 
 These buckets are intentionally excluded from the public catalog and future plugin manifests.
