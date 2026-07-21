@@ -77,6 +77,20 @@ Native plugin packaging is planned for a later phase. Until then, use the generi
 - Use [`templates/skill`](./templates/skill) as the starting point.
 - Use [`docs/promotion-checklist.md`](./docs/promotion-checklist.md) before promoting a skill.
 
+## Validation
+
+List all skill instruction files:
+
+```bash
+npm run list-skills
+```
+
+Check promoted skill structure, docs coverage, README coverage, and invocation metadata:
+
+```bash
+npm run validate
+```
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
