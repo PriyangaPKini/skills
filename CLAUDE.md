@@ -43,8 +43,13 @@ When promoted user-facing skills are added, renamed, removed, or meaningfully ch
 
 ## Validation
 
-Run validation before opening or updating PRs:
+Use the repository scripts to catch catalog and metadata drift:
 
 ```bash
+npm run list-skills
 npm run validate
 ```
+
+`validate` checks promoted skill structure, docs coverage, README coverage, user-invoked metadata consistency, and that non-promoted skills are not exposed as public docs/catalog entries.
+
+Run validation before opening or updating PRs.
