@@ -91,6 +91,8 @@ Check promoted skill structure, docs coverage, README coverage, and invocation m
 npm run validate
 ```
 
+Pull requests run the same validation in GitHub Actions via [`.github/workflows/validate.yml`](./.github/workflows/validate.yml).
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
