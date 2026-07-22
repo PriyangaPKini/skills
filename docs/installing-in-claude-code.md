@@ -16,6 +16,22 @@ npx skills add PriyangaPKini/skills --skill=code-review
 
 This installs editable skill files so you can adapt them to your own workflow.
 
+## Updating installed skills
+
+Editable/manual skill files do not update automatically. After a repository change is merged, rerun the installer to refresh all skills:
+
+```bash
+npx skills add PriyangaPKini/skills
+```
+
+Or refresh one skill:
+
+```bash
+npx skills add PriyangaPKini/skills --skill=incremental-delivery-workflow
+```
+
+For plugin installs, update or reinstall through Claude Code's plugin workflow.
+
 ## Manual install
 
 Copy skill folders into Claude's local skills directory:

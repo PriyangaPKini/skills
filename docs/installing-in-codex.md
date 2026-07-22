@@ -14,6 +14,22 @@ Install one skill:
 npx skills add PriyangaPKini/skills --skill=diagnosing-bugs
 ```
 
+## Updating installed skills
+
+Installed editable/manual skill files do not update automatically. After a repository change is merged, rerun the installer to refresh all skills:
+
+```bash
+npx skills add PriyangaPKini/skills
+```
+
+Or refresh one skill:
+
+```bash
+npx skills add PriyangaPKini/skills --skill=incremental-delivery-workflow
+```
+
+Restart or reload the harness if the updated skill is not discovered immediately.
+
 ## Manual install
 
 Copy skill folders into your Agent Skills directory:
