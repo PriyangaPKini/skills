@@ -31,7 +31,7 @@ Model-invoked:
 - [`tdd`](./skills/engineering/tdd/SKILL.md) — Test-driven development with red-green implementation.
 - [`diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md) — Reproduce, isolate, fix, and regression-test bugs.
 - [`code-review`](./skills/engineering/code-review/SKILL.md) — Review changes against standards and spec.
-- [`incremental-delivery-workflow`](./skills/engineering/incremental-delivery-workflow/SKILL.md) — Deliver finalized plans through small reviewable Git/GitHub PR slices.
+- [`incremental-delivery-workflow`](./skills/engineering/incremental-delivery-workflow/SKILL.md) — Deliver finalized plans through appropriately scaled Git/GitHub PRs.
 
 #### Productivity skills
 

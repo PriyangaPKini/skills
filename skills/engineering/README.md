@@ -13,7 +13,7 @@ None yet.
 - [`tdd`](./tdd/SKILL.md) — Test-driven development with red-green implementation.
 - [`diagnosing-bugs`](./diagnosing-bugs/SKILL.md) — Reproduce, isolate, fix, and regression-test bugs.
 - [`code-review`](./code-review/SKILL.md) — Review changes against standards and spec.
-- [`incremental-delivery-workflow`](./incremental-delivery-workflow/SKILL.md) — Deliver finalized plans through small reviewable Git/GitHub PR slices.
+- [`incremental-delivery-workflow`](./incremental-delivery-workflow/SKILL.md) — Deliver finalized plans through appropriately scaled Git/GitHub PRs.
 
 ## Promotion requirements
 

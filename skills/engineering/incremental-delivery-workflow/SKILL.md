@@ -1,24 +1,25 @@
 ---
 name: incremental-delivery-workflow
-description: "Run or resume an incremental Git/GitHub delivery workflow for any finalized implementation plan so changes stay small, reviewable, and safely integrated: preflight existing workflow state before planning/coding, create a base feature branch, create task/phase/review-fix slice branches with PRs to that base, integrate approved slices with fast-forward Git history, optionally run independent slices in parallel when requested, then raise or update one aggregate PR to the project deployment branch. Use when implementing a finalized plan, resuming implementation, continuing implementation, continuing a plan, picking up implementation, moving to the next feature/task/phase, avoiding one large risky PR, creating small reviewable PR slices, preserving linear Git history, coordinating serial phases, or coordinating independent parallel task branches."
+description: "Run or resume a scaled Git/GitHub delivery workflow for any finalized implementation plan so changes stay appropriately sized, reviewable, and safely integrated: preflight existing workflow state before planning/coding, choose direct single-PR delivery for small low-risk plans, or create a base feature branch with task/phase/review-fix slice PRs for larger work, integrate approved slices with fast-forward Git history, optionally run independent slices in parallel when requested, then raise or update one aggregate PR to the project deployment branch. Use when implementing a finalized plan, resuming implementation, continuing implementation, continuing a plan, picking up implementation, moving to the next feature/task/phase, avoiding one large risky PR, choosing between one PR and sliced delivery, preserving linear Git history, coordinating serial phases, or coordinating independent parallel task branches."
 ---
 
 # Incremental Delivery Workflow
 
-Use this workflow after any implementation plan is finalized when the work should be split into small reviewable PR artifacts plus one final human review PR from the created base branch to the project's deployment-ready branch. Execute dependent work sequentially by default; run independent slice branches in parallel only when the finalized plan clearly supports it or the user explicitly asks for parallel work.
+Use this workflow after any implementation plan is finalized when the delivery shape should be scaled to the work. Small, cohesive, low-risk plans should usually ship as one normal PR directly to the project's deployment-ready branch. Larger or riskier plans should be split into small reviewable PR artifacts plus one final human review PR from a created base branch to the deployment-ready branch. Execute dependent sliced work sequentially by default; run independent slice branches in parallel only when the finalized plan clearly supports it or the user explicitly asks for parallel work.
 
 When the user asks to implement, continue, resume, or work on the next feature/task, check workflow state before planning or coding. A previous session may have ended abruptly, leaving an unreviewed PR, uncommitted slice, unpushed branch, or unfinished integration.
 
 ## Core model
 
 - **Deployment branch**: the project's deployment-ready integration branch, e.g. `main`, `master`, `develop`, or a release branch. This is the branch the final aggregate PR targets.
-- **Base branch**: one feature/plan branch created from the deployment branch. This is not the deployment branch itself. Name it using project contribution conventions, e.g. `feature/<ticket>-<slug>` when that is the repo norm.
-- **Slice branch**: one task, phase, or review-fix branch, created from the current base branch. Example names like `task/<slug>`, `phase/<number>-<slug>`, or `fix/<slug>` are illustrative only; project branch conventions win.
+- **Direct PR branch**: one feature/fix branch created from the deployment branch for small plans that fit the direct-PR threshold. It opens one PR directly to the deployment branch and does not create a workflow base branch or slice PRs.
+- **Base branch**: one feature/plan branch created from the deployment branch for sliced delivery. This is not the deployment branch itself. Name it using project contribution conventions, e.g. `feature/<ticket>-<slug>` when that is the repo norm.
+- **Slice branch**: one task, phase, or review-fix branch, created from the current base branch during sliced delivery. Example names like `task/<slug>`, `phase/<number>-<slug>`, or `fix/<slug>` are illustrative only; project branch conventions win.
 - **Slice PR**: a GitHub PR from slice branch to base branch. It is created before integration so GitHub captures a reviewable diff UI, comments, commits, and CI history.
 - **Aggregate PR**: the final human review PR from base branch to the deployment branch, e.g. `feature/<slug> -> master` or `feature/<slug> -> main`.
 - **Integration**: locally fast-forward the base branch to the slice branch, then push the base branch. Do not use GitHub's merge button for slice PRs.
 
-Review mode is always **artifact-first**: slice PRs are preserved slice-level history/artifacts, not the final human approval gate. The final human review happens on the aggregate PR. Expected outcome: slice PRs appear as merged/closed on GitHub, the aggregate PR contains the final combined diff, and Git history stays linear until the aggregate PR is merged according to project rules.
+Review mode is **right-sized**. Direct PR mode has one normal human review PR. Sliced mode is **artifact-first**: slice PRs are preserved slice-level history/artifacts, not the final human approval gate. The final human review happens on the aggregate PR. Expected outcome for sliced mode: slice PRs appear as merged/closed on GitHub, the aggregate PR contains the final combined diff, and Git history stays linear until the aggregate PR is merged according to project rules.
 
 ## Mandatory first step: discover project contribution rules
 
@@ -39,7 +40,7 @@ git remote -v
 git remote show origin | sed -n '/HEAD branch/s/.*: //p'
 ```
 
-Confirm or infer whether agents may push to newly created feature/task branches. The deployment branch is usually protected and should not be pushed to directly. The base branch is created by this workflow from the deployment branch and is normally unprotected; if repo/org rules protect that new base branch in a way that blocks direct pushes, stop and ask for a different branch or workflow adjustment.
+Confirm or infer whether agents may push to newly created feature/task branches. The deployment branch is usually protected and should not be pushed to directly. Direct PR branches and sliced-mode base branches are created by this workflow from the deployment branch and are normally unprotected; if repo/org rules protect the chosen working branch in a way that blocks direct pushes, stop and ask for a different branch or workflow adjustment.
 
 Follow this precedence:
 
@@ -50,7 +51,7 @@ Follow this precedence:
 
 Adapt branch names, commit style, PR title/body, required issue links, tests, CI expectations, signed commits, reviewer/label rules, and deployment branch (`master`, `main`, `develop`, release branch, etc.) to the project. When Jira or another issue tracker is used, preserve story/task identifiers in branch names, commit messages, and PR titles/bodies according to repo convention.
 
-Completion criterion: you have stated the detected deployment branch, contribution files consulted, branch/commit/PR conventions, required checks, selected base branch name, and push/protection assumptions before branch creation.
+Completion criterion: you have stated the detected deployment branch, contribution files consulted, branch/commit/PR conventions, required checks, selected delivery mode (`direct PR` or `sliced`), selected branch name(s), and push/protection assumptions before branch creation.
 
 ## Preflight before planning or implementation
 
@@ -73,9 +74,11 @@ Identify, in this order:
 
 - whether there is an existing plan/workflow in progress from the current session, repo docs, issue, branch names, or PRs
 - deployment branch
-- base branch created for the feature/story
+- delivery mode: direct PR or sliced, inferred from branches/PRs and any recorded plan
+- direct PR branch/PR, if one exists (`<direct-pr-branch> -> <deployment>`)
+- base branch created for the feature/story, if sliced mode was used
 - aggregate PR, if one exists (`<base-branch> -> <deployment>`)
-- slice PRs targeting the base branch
+- slice PRs targeting the base branch, if sliced mode was used
 - local or remote branches without PRs
 - uncommitted or unpushed work on the current branch
 - planned tasks/phases not started yet, from the plan or user context
@@ -97,6 +100,7 @@ Please review #13 and tell me when it is approved/done. Once you get back to me,
 
 Resume ordering rules:
 
+- If a direct PR is ready/open, stop at that review checkpoint unless the user asks for updates to that PR.
 - If any previous slice PR is ready/open and not integrated, stop at that review checkpoint. Do not start planning or implementing the next task/phase/feature.
 - If the current branch has uncommitted slice work, finish that slice: run checks, commit using project conventions, push, open/update the slice PR, then wait for review approval.
 - If a slice PR was reviewed and the user says approved/done, integrate it automatically, then ask whether to continue with the next task/phase/feature.
@@ -104,11 +108,53 @@ Resume ordering rules:
 
 Completion criterion: the user has a minimal workflow checkpoint and the workflow is either waiting at the correct review checkpoint, finishing an in-progress slice, or continuing only after the user chose the next action.
 
+## Scale selection threshold
+
+Before creating branches, choose the delivery mode from the finalized plan and state the decision.
+
+Use **direct PR mode** when all of these are true:
+
+- the plan has one cohesive task or one tightly coupled serial change that reviewers can understand as a single diff
+- expected implementation is small enough for a fast review: usually less than 200 net changed lines across no more than 5 files
+- no database migrations, broad public API/schema changes, security-sensitive behavior, large refactors, or cross-cutting changes across multiple subsystems
+- the work can be fully validated with the repo's normal required checks in one pass
+- the user or project rules do not require slice artifacts
+
+Use **sliced mode** when any of these are true:
+
+- the plan naturally has 2 or more independently reviewable tasks or dependent phases
+- expected implementation is 200 or more net changed lines or exceeds 5 files
+- the plan includes migrations, public API/schema changes, risky behavior changes, broad refactors, or changes across multiple subsystems
+- review would likely take more than about 15 minutes as one PR
+- the user asks to keep PRs small, preserve slice artifacts, run independent tasks in parallel, or avoid one large risky PR
+
+If the plan is close to the threshold, prefer direct PR for cohesive low-risk work and sliced mode for uncertain or higher-risk work. Do not split just to follow the workflow; use sliced delivery only when it improves review safety.
+
 ## Workflow
 
-### 1. Prepare the base branch
+### 1. Choose direct PR or prepare the base branch
 
 Require a clean worktree unless the user explicitly asks you to handle existing changes.
+
+For **direct PR mode**, create one normal feature/fix branch from the deployment branch, implement the full small plan on that branch, run required checks, commit, push, and open one PR directly to the deployment branch. Do not create a base branch, slice branches, slice PRs, or aggregate PR.
+
+```bash
+git status --short
+git fetch origin
+# replace <deployment> with the detected project deployment branch
+git checkout <deployment>
+git pull --ff-only origin <deployment>
+git checkout -b <direct-pr-branch>
+# implement the small plan, run checks, commit
+git push -u origin <direct-pr-branch>
+gh pr create \
+  --base <deployment> \
+  --head <direct-pr-branch> \
+  --title "<project-compliant title>" \
+  --body "<project-compliant body>"
+```
+
+For **sliced mode**, create a base branch from the deployment branch before creating slice branches.
 
 ```bash
 git status --short
@@ -120,13 +166,13 @@ git checkout -b <base-branch>
 git push -u origin <base-branch>
 ```
 
-Choose `<base-branch>` from project conventions. Prefer the repo's normal feature branch prefix when one exists, e.g. `feature/<story-id>-<slug>` or `feature/<ticket>-<slug>`. Do not hardcode `plan/` unless it fits the repo.
+Choose `<direct-pr-branch>` or `<base-branch>` from project conventions. Prefer the repo's normal feature branch prefix when one exists, e.g. `feature/<story-id>-<slug>` or `feature/<ticket>-<slug>`. Do not hardcode `plan/` unless it fits the repo.
 
-Completion criterion: `<base-branch>` exists locally and remotely, starts at current `<deployment>`, and is documented as the base branch for the plan.
+Completion criterion for direct PR mode: `<direct-pr-branch>` exists locally and remotely, starts at current `<deployment>`, contains the complete small change, passes required checks or documents failures, and has one PR targeting `<deployment>`. Completion criterion for sliced mode: `<base-branch>` exists locally and remotely, starts at current `<deployment>`, and is documented as the base branch for the plan.
 
 ### 2. Classify increments as independent tasks or serial phases
 
-Support both execution shapes. Default to serial/sequential execution unless the finalized plan clearly marks independent tasks or the user explicitly asks for parallel work.
+Skip this step in direct PR mode. In sliced mode, support both execution shapes. Default to serial/sequential execution unless the finalized plan clearly marks independent tasks or the user explicitly asks for parallel work.
 
 **Parallel task shape**: use when tasks are independently solvable from the base branch. Multiple agents may work on different slice branches at the same time only when parallelization is requested or explicitly supported by the finalized plan, but ready slice PRs still wait for user review approval before integration. Do not start extra parallel work on resume if there is a ready/open slice waiting for review unless the user explicitly says to leave it open and start another independent slice.
 
@@ -148,7 +194,7 @@ Completion criterion: each slice branch contains only its intended task/phase co
 
 ### 3. Open the slice PR before integration
 
-Push the slice branch and open a PR targeting the base branch:
+Skip this step in direct PR mode. In sliced mode, push the slice branch and open a PR targeting the base branch:
 
 ```bash
 git push -u origin <slice-branch>
@@ -167,7 +213,9 @@ Completion criterion: every completed slice has committed changes, a pushed bran
 
 ### 4. Offer a slice review checkpoint, then fast-forward
 
-When each slice PR is ready, explicitly ask the user to review it and get back to the agent. Keep workflow mechanics in this message, not in the PR body. Example: `Slice PR #12 is ready: <url>. Please review it and tell me when it is approved/done. Once you get back to me, I will integrate it into <base-branch> and ask whether to move on to the next task/phase/feature.`
+In direct PR mode, stop after the single PR is ready and ask the user to review it according to normal project rules. There is no base integration step.
+
+In sliced mode, when each slice PR is ready, explicitly ask the user to review it and get back to the agent. Keep workflow mechanics in this message, not in the PR body. Example: `Slice PR #12 is ready: <url>. Please review it and tell me when it is approved/done. Once you get back to me, I will integrate it into <base-branch> and ask whether to move on to the next task/phase/feature.`
 
 Pause work on that slice until the user says the review is done/approved. Make the next expected user action clear; do not merely say the workflow is waiting. Do not implement the next serial phase or next non-explicit parallel task while waiting. Once the user says the review is done/approved, automatically integrate that slice into the base branch; do not ask a second time whether to integrate. After integration succeeds, ask whether to continue with the next task/phase/feature.
 
@@ -219,7 +267,9 @@ Completion criterion: the user had a review checkpoint for the ready slice PR, G
 
 ### 5. Maintain the aggregate PR
 
-Open or update the aggregate PR from base branch to deployment branch:
+Skip this step in direct PR mode; the direct PR is already the human review PR to the deployment branch.
+
+In sliced mode, open or update the aggregate PR from base branch to deployment branch:
 
 ```bash
 gh pr create \
@@ -266,7 +316,9 @@ Completion criterion: the aggregate PR is the only workflow PR targeting the dep
 
 ### 6. Handle review feedback
 
-When the aggregate PR receives review feedback, do not amend already integrated task branches unless the user explicitly asks. Create a new review-fix slice from the current base:
+In direct PR mode, handle review feedback on the direct PR branch using the project's normal update flow: commit fixes to the same branch unless the user or project rules require a separate follow-up PR.
+
+In sliced mode, when the aggregate PR receives review feedback, do not amend already integrated task branches unless the user explicitly asks. Create a new review-fix slice from the current base:
 
 ```bash
 git checkout <base-branch>
@@ -280,20 +332,34 @@ Completion criterion: every review-requested code change is represented by a new
 
 ### 7. Final merge
 
-When the aggregate PR is approved and required checks pass, merge the aggregate PR according to the project's contribution rules and GitHub settings. A normal merge of the base branch to the deployment branch is acceptable when that is the repo's standard; do not fight project settings unless the user asks.
+In direct PR mode, when the direct PR is approved and required checks pass, merge it according to the project's contribution rules and GitHub settings.
 
-Completion criterion: the base branch is merged to the project deployment branch according to project rules, and any branch cleanup is done only with user approval.
+In sliced mode, when the aggregate PR is approved and required checks pass, merge the aggregate PR according to the project's contribution rules and GitHub settings. A normal merge of the base branch to the deployment branch is acceptable when that is the repo's standard; do not fight project settings unless the user asks.
+
+Completion criterion: the direct PR branch or base branch is merged to the project deployment branch according to project rules, and any branch cleanup is done only with user approval.
 
 ## Status report format
 
-Default to minimal checkpoint output. Do not include implementation summaries, file lists, commit lists, or check details unless the user asks. When reporting progress, use this shape:
+Default to minimal checkpoint output. Do not include implementation summaries, file lists, commit lists, or check details unless the user asks. For direct PR mode, use this shape:
+
+```md
+Workflow checkpoint: PR #<n> is ready for review: <url>.
+Please review PR #<n> and tell me when it is approved/done.
+
+Details available on request:
+- delivery mode / deployment branch
+- checks
+- commits
+```
+
+For sliced mode, use this shape:
 
 ```md
 Workflow checkpoint: PR #<n> is ready for review: <url>.
 Please review PR #<n> and tell me when it is approved/done. Once you get back to me, I will integrate it into `<base-branch>` and ask whether to move on to the next task/phase/feature.
 
 Details available on request:
-- base branch / deployment branch
+- delivery mode / base branch / deployment branch
 - aggregate PR
 - slice list
 - checks
@@ -307,7 +373,7 @@ Stop and ask the user before proceeding if:
 - the worktree is dirty and the changes are not yours
 - the deployment branch is ambiguous
 - project contribution rules conflict with this workflow
-- direct push to the chosen base branch is blocked
+- direct push to the chosen direct PR branch or base branch is blocked
 - another agent/process is currently integrating into the base branch
 - a previous ready slice PR is awaiting user review approval and the user has not explicitly asked to start another independent parallel slice
 - a stale slice cannot be cleanly cherry-picked onto a replacement branch from the latest base
