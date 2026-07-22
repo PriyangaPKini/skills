@@ -6,6 +6,7 @@ This project uses a lightweight manual changelog. Add entries under `Unreleased`
 
 ## Unreleased
 
+- Updated `incremental-delivery-workflow` to choose direct single-PR delivery for small low-risk plans and sliced delivery for larger work.
 - Added `incremental-delivery-workflow` for delivering finalized plans through small reviewable Git/GitHub PR slices.
 
 ## 0.1.0 - 2026-07-21
