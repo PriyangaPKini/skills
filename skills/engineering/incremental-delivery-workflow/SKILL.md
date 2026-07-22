@@ -205,7 +205,7 @@ gh pr create \
   --body "<project-compliant body>"
 ```
 
-The slice PR body must follow the same project PR conventions as any other PR. Use the repo PR template when present; otherwise use this skill's default PR body template: `Ref`, `Because`, `This addresses`, `Test Plan`. Keep the description focused only on the actual independent task change: why it exists, what it changes, and checks run.
+The slice PR body must follow the same project PR conventions as any other PR. Use the repo PR template when present; otherwise use this skill's default PR body template: `Because`, `This addresses`, `Test Plan`, plus `Ref` only when there is a real issue/ticket reference. If the reference would be `N/A`, omit the `Ref` line/section entirely. Keep the description focused only on the actual independent task change: why it exists, what it changes, and checks run.
 
 Do not mention that this is a slice, that it belongs to a parent/aggregate PR, that it targets a base branch, the linear workflow, artifact explanations, merge-button warnings, or integration mechanics in the slice PR body. Those belong in the agent's internal workflow/status updates, not in reviewer-facing PR copy.
 
@@ -281,10 +281,10 @@ gh pr create \
 
 The aggregate PR body must first satisfy the project's GitHub contribution guidance and PR template exactly: required sections, issue links, test plan, screenshots, risk notes, labels/reviewer conventions, and any other repo-specific fields.
 
-If the project has no PR template or contribution guidance, use these default conventions for every PR:
+If the project has no PR template or contribution guidance, use these default conventions for every PR. Include `Ref: #<issue-number>` only when there is a real issue/ticket reference; if the value would be `N/A`, omit the `Ref` line entirely.
 
 ```md
-Ref: #<issue-number>
+Ref: #<issue-number> <!-- omit this line if there is no real reference -->
 
 ## Because
 - <why the change is being made>
